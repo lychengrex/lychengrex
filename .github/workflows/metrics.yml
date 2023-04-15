@@ -12,17 +12,37 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: lowlighter/metrics@latest
+      - name: Github metrics
+        uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.METRICS_TOKEN }}
-      - uses: lowlighter/metrics@latest
+#       - name: Language activity
+#         uses: lowlighter/metrics@latest
+#         with:
+#           filename: metrics.plugin.languages.details.svg
+#           token: ${{ secrets.METRICS_TOKEN }}
+#           base: ""
+#           plugin_languages: yes
+#           plugin_languages_ignored: >-
+#             html, css, tex, less, dockerfile, makefile, qmake, lex, cmake, shell,
+#             gnuplot
+#           plugin_languages_details: bytes-size, percentage
+#           plugin_languages_limit: 4
+      - name: Stargazers using classic charts
+        uses: lowlighter/metrics@latest
         with:
-          filename: metrics.plugin.languages.details.svg
+          filename: metrics.plugin.stargazers.svg
           token: ${{ secrets.METRICS_TOKEN }}
           base: ""
-          plugin_languages: yes
-          plugin_languages_ignored: >-
-            html, css, tex, less, dockerfile, makefile, qmake, lex, cmake, shell,
-            gnuplot
-          plugin_languages_details: bytes-size, percentage
-          plugin_languages_limit: 4
+          plugin_stargazers: yes
+      - name: Stargazers with worldmap
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.plugin.stargazers.worldmap.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_stargazers: yes
+          plugin_stargazers_charts: no
+          plugin_stargazers_worldmap: yes
+          plugin_stargazers_worldmap_token: ${{ secrets.GOOGLE_MAP_TOKEN }}
+          plugin_stargazers_worldmap_sample: 200
